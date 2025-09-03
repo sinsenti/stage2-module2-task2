@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.example.Users;
+
 @WebServlet
 public class LoginServlet extends HttpServlet {
   @Override
@@ -30,7 +32,8 @@ public class LoginServlet extends HttpServlet {
     // String username = req.getParameter("login");
     // String password = req.getParameter("password");
 
-    if (!username.isPresent() && !password.isPresent() && (username.get() == "user" || username.get() == "admin")) {
+    if (!username.isPresent() && !password.isPresent() && (username.get() == "user" || username.get() == "admin"
+        || Users.getInstance().getUsers().contains(username.get()))) {
       HttpSession session = req.getSession(true);
       session.setAttribute("user", username);
       resp.sendRedirect("/user/hello.jsp");
