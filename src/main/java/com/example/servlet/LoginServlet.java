@@ -1,6 +1,7 @@
 package com.example.servlet;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,10 +25,13 @@ public class LoginServlet extends HttpServlet {
 
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    String username = req.getParameter("login");
-    String password = req.getParameter("password");
+    Optional<String> username = Optional.ofNullable(req.getParameter("login"));
+    Optional<String> password = Optional.ofNullable(req.getParameter("password"));
+    // String username = req.getParameter("login");
+    // String password = req.getParameter("password");
 
-    if (username != null && !password.isEmpty() && password != null && (username == "user" || username == "admin")) {
+    if (!username.isPresent() && !password.isPresent() && password != null
+        && (username.get() == "user" || username.get() == "admin")) {
       HttpSession session = req.getSession(true);
       session.setAttribute("user", username);
       resp.sendRedirect("/user/hello.jsp");
