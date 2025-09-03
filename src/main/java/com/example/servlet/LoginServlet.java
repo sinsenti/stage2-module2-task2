@@ -30,8 +30,7 @@ public class LoginServlet extends HttpServlet {
     // String username = req.getParameter("login");
     // String password = req.getParameter("password");
 
-    if (!username.isPresent() && !password.isPresent() && password != null
-        && (username.get() == "user" || username.get() == "admin")) {
+    if (!username.isPresent() && !password.isPresent() && (username.get() == "user" || username.get() == "admin")) {
       HttpSession session = req.getSession(true);
       session.setAttribute("user", username);
       resp.sendRedirect("/user/hello.jsp");
